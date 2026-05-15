@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Packages — JJAutoDetail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --bg-elev: #131316;
+    --bg-elev-2: #1a1a1f;
+    --line: #2a2a30;
+    --text: #f3f1ec;
+    --text-dim: #a1a1aa;
+    --accent: #d4a24c;
+    --accent-hot: #e9b860;
+    --accent-soft: rgba(212, 162, 76, 0.12);
+    --display: 'Fraunces', Georgia, serif;
+    --sans: 'Manrope', -apple-system, sans-serif;
+    --maxw: 1200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.95 0 0 0 0 0.95 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Nav ===== */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11, 11, 13, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-mark {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-hot), var(--accent) 60%, #6b4d1f);
+    box-shadow: 0 0 18px var(--accent-soft);
+  }
+
+  .logo em { color: var(--accent); font-style: italic; font-weight: 500; }
+
+  nav ul {
+    display: flex;
+    gap: 2.25rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--text); }
+  nav a.active { color: var(--text); }
+  nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 100%; height: 1px;
+    background: var(--accent);
+  }
+
+  nav a:not(.active)::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+  nav a:not(.active):hover::after { width: 100%; }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 6rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 10%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    max-width: 880px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  .hero p.lede {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 620px;
+  }
+
+  /* ===== Tier sections ===== */
+  .tier {
+    padding: 4rem 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+    z-index: 2;
+  }
+
+  .tier:first-of-type { border-top: 0; }
+
+  .tier-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .tier-num {
+    font-family: var(--display);
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .tier-head h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .tier-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  .tier-head p {
+    color: var(--text-dim);
+    max-width: 380px;
+    font-size: 0.95rem;
+  }
+
+  .bundle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .bundle {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    position: relative;
+    transition: transform 0.35s ease, border-color 0.35s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bundle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent-soft), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .bundle:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+  }
+  .bundle:hover::before { opacity: 1; }
+
+  .bundle.featured {
+    border-color: var(--accent);
+    background: var(--bg-elev-2);
+  }
+
+  .save-badge {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    background: var(--accent);
+    color: #1a1208;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+  }
+
+  .bundle-qty {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  .bundle h3 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .bundle-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .bundle-price .amount {
+    font-family: var(--display);
+    font-size: 2.75rem;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+  }
+  .bundle-price .unit { color: var(--text-dim); font-size: 0.85rem; }
+
+  .per-detail {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .per-detail strong { color: var(--accent); font-weight: 600; }
+
+  .savings {
+    color: var(--text);
+    font-size: 0.85rem;
+    padding: 0.5rem 0.85rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    display: inline-flex;
+    align-self: flex-start;
+    margin-bottom: 1.75rem;
+    font-weight: 500;
+  }
+
+  .bundle .btn {
+    margin-top: auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .bundle-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .bundle-note {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* ===== Buttons ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #1a1208;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hot);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -8px var(--accent-soft);
+  }
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--text);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ===== Final CTA ===== */
+  .final-cta {
+    padding: 5rem 0 6rem;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    position: relative;
+    z-index: 2;
+  }
+  .final-cta h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .final-cta h2 em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .final-cta p {
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 2.5rem 0;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 2;
+  }
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 900px) {
+    .bundle-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    nav ul { gap: 1.25rem; }
+    nav a { font-size: 0.78rem; }
+    .nav-inner { padding: 1rem 1.25rem; }
+    .container { padding: 0 1.25rem; }
+    .hero { padding: 4rem 0 2.5rem; }
+    .tier { padding: 3rem 0; }
+    .logo span.full { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= NAV ========= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark"></span>
+      <span class="full">JJ<em>Auto</em>Detail</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html" class="active">Packages</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ========= HERO ========= -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">Bundles &amp; Savings</div>
+    <h1>One detail, or smart <em>bundle</em>.</h1>
+    <p class="lede">Save more when you book multiple details of the same tier. Perfect for staying on a regular schedule, or for households and businesses with more than one vehicle.</p>
+  </div>
+</section>
+
+<!-- ========= EXPRESS ========= -->
+<section class="tier" id="express">
+  <div class="container">
+    <div class="tier-head">
+      <div>
+        <div class="tier-num">— 01 / Tier One</div>
+        <h2>Express <em>Shine</em></h2>
+      </div>
+      <p>A quick refresh for daily drivers. Hand wash, wheels, interior vacuum, windows.</p>
+    </div>
+
+    <div class="bundle-grid">
+
+      <!-- Express single -->
+      <article class="bundle">
+        <div class="bundle-qty">Single Detail</div>
+        <h3>Standard</h3>
+        <div class="bundle-price">
+          <span class="amount">$180</span>
+        </div>
+        <div class="per-detail">One Express Shine</div>
+        <div class="bundle-divider"></div>
+        <p class="bundle-note">Best for first-time customers or one-off cleanings.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book One</a>
+      </article>
+
+      <!-- Express 3-pack -->
+      <article class="bundle">
+        <span class="save-badge">Save 10%</span>
+        <div class="bundle-qty">3-Detail Bundle</div>
+        <h3>Triple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$486</span>
+        </div>
+        <div class="per-detail"><strong>$162</strong> per detail</div>
+        <div class="savings">You save $54</div>
+        <p class="bundle-note">Use across three visits, or across multiple vehicles in one visit.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book Triple</a>
+      </article>
+
+      <!-- Express 5-pack -->
+      <article class="bundle featured">
+        <span class="save-badge">Save 15%</span>
+        <div class="bundle-qty">5-Detail Bundle</div>
+        <h3>Quintuple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$765</span>
+        </div>
+        <div class="per-detail"><strong>$153</strong> per detail</div>
+        <div class="savings">You save $135</div>
+        <p class="bundle-note">Our best Express value. Great for fleets or year-round maintenance.</p>
+        <a href="index.html#contact" class="btn btn-primary" style="margin-top:1.5rem;">Book Quintuple</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========= SIGNATURE ========= -->
+<section class="tier" id="signature">
+  <div class="container">
+    <div class="tier-head">
+      <div>
+        <div class="tier-num">— 02 / Tier Two</div>
+        <h2>Signature <em>Detail</em></h2>
+      </div>
+      <p>The full inside &amp; out treatment. Clay bar, carnauba wax, interior shampoo, leather conditioning.</p>
+    </div>
+
+    <div class="bundle-grid">
+
+      <article class="bundle">
+        <div class="bundle-qty">Single Detail</div>
+        <h3>Standard</h3>
+        <div class="bundle-price">
+          <span class="amount">$210</span>
+        </div>
+        <div class="per-detail">One Signature Detail</div>
+        <div class="bundle-divider"></div>
+        <p class="bundle-note">A full reset for your car — inside, outside, and everywhere in between.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book One</a>
+      </article>
+
+      <article class="bundle">
+        <span class="save-badge">Save 10%</span>
+        <div class="bundle-qty">3-Detail Bundle</div>
+        <h3>Triple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$567</span>
+        </div>
+        <div class="per-detail"><strong>$189</strong> per detail</div>
+        <div class="savings">You save $63</div>
+        <p class="bundle-note">Use across three visits, or across multiple vehicles in one visit.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book Triple</a>
+      </article>
+
+      <article class="bundle featured">
+        <span class="save-badge">Save 15%</span>
+        <div class="bundle-qty">5-Detail Bundle</div>
+        <h3>Quintuple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$892<span style="font-size:1.5rem;">.50</span></span>
+        </div>
+        <div class="per-detail"><strong>$178.50</strong> per detail</div>
+        <div class="savings">You save $157.50</div>
+        <p class="bundle-note">Our best Signature value. Ideal for keeping the car in peak shape year-round.</p>
+        <a href="index.html#contact" class="btn btn-primary" style="margin-top:1.5rem;">Book Quintuple</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========= SHOWROOM ========= -->
+<section class="tier" id="showroom">
+  <div class="container">
+    <div class="tier-head">
+      <div>
+        <div class="tier-num">— 03 / Tier Three</div>
+        <h2>Show<em>room</em></h2>
+      </div>
+      <p>Concours-level restoration. Paint correction, ceramic sealant, engine bay, headlight restoration.</p>
+    </div>
+
+    <div class="bundle-grid">
+
+      <article class="bundle">
+        <div class="bundle-qty">Single Detail</div>
+        <h3>Standard</h3>
+        <div class="bundle-price">
+          <span class="amount">$300</span>
+        </div>
+        <div class="per-detail">One Showroom Detail</div>
+        <div class="bundle-divider"></div>
+        <p class="bundle-note">A complete restoration for cars you really care about.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book One</a>
+      </article>
+
+      <article class="bundle">
+        <span class="save-badge">Save 10%</span>
+        <div class="bundle-qty">3-Detail Bundle</div>
+        <h3>Triple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$810</span>
+        </div>
+        <div class="per-detail"><strong>$270</strong> per detail</div>
+        <div class="savings">You save $90</div>
+        <p class="bundle-note">Use across three visits, or across multiple vehicles in one visit.</p>
+        <a href="index.html#contact" class="btn btn-ghost" style="margin-top:1.5rem;">Book Triple</a>
+      </article>
+
+      <article class="bundle featured">
+        <span class="save-badge">Save 15%</span>
+        <div class="bundle-qty">5-Detail Bundle</div>
+        <h3>Quintuple Pack</h3>
+        <div class="bundle-price">
+          <span class="amount">$1,275</span>
+        </div>
+        <div class="per-detail"><strong>$255</strong> per detail</div>
+        <div class="savings">You save $225</div>
+        <p class="bundle-note">Our best Showroom value. Perfect for collectors and enthusiasts.</p>
+        <a href="index.html#contact" class="btn btn-primary" style="margin-top:1.5rem;">Book Quintuple</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========= FINAL CTA ========= -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Ready to book a <em>bundle</em>?</h2>
+    <p>Have multiple vehicles or a specific request? Reach out and we'll put together a custom quote.</p>
+    <a href="index.html#contact" class="btn btn-primary">Contact Us →</a>
+  </div>
+</section>
+
+<!-- ========= FOOTER ========= -->
+<footer>
+  <div class="container">
+    <div>© 2026 JJAutoDetail. All rights reserved.</div>
+    <div>Crafted with care · Detailing since 2020</div>
+  </div>
+</footer>
+
+</body>
+</html>
