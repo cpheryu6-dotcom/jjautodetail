@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JJAutoDetail — Premium Mobile Car Detailing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --bg-elev: #131316;
+    --bg-elev-2: #1a1a1f;
+    --line: #2a2a30;
+    --text: #f3f1ec;
+    --text-dim: #a1a1aa;
+    --accent: #d4a24c;       /* warm amber/gold */
+    --accent-hot: #e9b860;
+    --accent-soft: rgba(212, 162, 76, 0.12);
+    --display: 'Fraunces', Georgia, serif;
+    --sans: 'Manrope', -apple-system, sans-serif;
+    --maxw: 1200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grain overlay for premium feel */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.95 0 0 0 0 0.95 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    z-index: 1;
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Navigation ===== */
+  header.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11, 11, 13, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-mark {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-hot), var(--accent) 60%, #6b4d1f);
+    box-shadow: 0 0 18px var(--accent-soft);
+  }
+
+  .logo em {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  nav ul {
+    display: flex;
+    gap: 2.25rem;
+    list-style: none;
+  }
+
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after { width: 100%; }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 7rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-soft), transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--accent);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(2.75rem, 6.5vw, 5.25rem);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .hero p.lede {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+  }
+
+  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.75rem;
+    border-radius: 999px;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #1a1208;
+  }
+  .btn-primary:hover {
+    background: var(--accent-hot);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -8px var(--accent-soft);
+  }
+
+  .btn-ghost {
+    border-color: var(--line);
+    color: var(--text);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ===== Section heading ===== */
+  .section {
+    padding: 5.5rem 0;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 3.5rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 600px;
+  }
+  .section-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+  .section-head p {
+    color: var(--text-dim);
+    max-width: 360px;
+    font-size: 0.95rem;
+  }
+
+  /* ===== Packages ===== */
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .pkg {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 2rem 1.75rem;
+    position: relative;
+    transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    overflow: hidden;
+  }
+
+  .pkg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent-soft), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .pkg:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+  }
+  .pkg:hover::before { opacity: 1; }
+
+  .pkg-featured {
+    border-color: var(--accent);
+    background: var(--bg-elev-2);
+  }
+
+  .pkg-tag {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .pkg h3 {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .pkg .pkg-sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .price .amount {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .price .unit {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+
+  .pkg ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .pkg li {
+    font-size: 0.92rem;
+    color: var(--text-dim);
+    display: flex;
+    gap: 0.6rem;
+    align-items: start;
+  }
+
+  .pkg li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 16px; height: 16px;
+    margin-top: 4px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .pkg .btn { width: 100%; justify-content: center; }
+
+  /* ===== Service Area ===== */
+  .area-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2.5rem;
+    align-items: stretch;
+  }
+
+  .area-info {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .area-info h3 {
+    font-family: var(--display);
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .area-info p {
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .area-info ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .area-info li {
+    font-size: 0.9rem;
+    color: var(--text);
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .area-info li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.55rem;
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .map-wrap {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    position: relative;
+    min-height: 380px;
+  }
+
+  .map-wrap iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    border: 0;
+    filter: invert(0.9) hue-rotate(180deg) saturate(0.7) brightness(0.95);
+  }
+
+  /* ===== Contact ===== */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .contact-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 1.75rem;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+
+  .contact-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .contact-card .label {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .contact-card .value {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    line-height: 1.3;
+  }
+
+  .contact-card .meta {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 2.5rem 0;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* ===== Animations ===== */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero .eyebrow { animation: rise 0.7s ease 0.1s both; }
+  .hero h1       { animation: rise 0.8s ease 0.25s both; }
+  .hero .lede    { animation: rise 0.8s ease 0.4s both; }
+  .hero .cta-row { animation: rise 0.8s ease 0.55s both; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 760px) {
+    nav ul { gap: 1.25rem; }
+    nav a  { font-size: 0.78rem; }
+    .nav-inner { padding: 1rem 1.25rem; }
+    .container { padding: 0 1.25rem; }
+    .hero { padding: 4rem 0 3rem; }
+    .section { padding: 3.5rem 0; }
+    .area-grid { grid-template-columns: 1fr; }
+    .area-info ul { grid-template-columns: 1fr; }
+    .logo span.full { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= NAV ========= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark"></span>
+      <span class="full">JJ<em>Auto</em>Detail</span>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ========= HERO ========= -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="eyebrow">Mobile Detailing · West Los Angeles</div>
+    <h1>The shine your car<br/>deserves, <em>delivered</em><br/>to your driveway.</h1>
+    <p class="lede">Hand-finished interior &amp; exterior detailing by appointment. We bring the studio to you — same-day bookings often available.</p>
+    <div class="cta-row">
+      <a href="#packages" class="btn btn-primary">View Packages →</a>
+      <a href="#contact" class="btn btn-ghost">Book a Detail</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========= PACKAGES ========= -->
+<section class="section" id="packages">
+  <div class="container">
+    <div class="section-head">
+      <h2>Our <em>Packages</em></h2>
+      <p>Signature services tuned for everyday care, full restoration, enthusiasts, and fleets.</p>
+    </div>
+
+    <div class="packages">
+
+      <!-- Package 1 -->
+      <article class="pkg">
+        <h3>Express Shine</h3>
+        <p class="pkg-sub">A quick refresh for daily drivers.</p>
+        <div class="price">
+          <span class="amount">$180</span>
+          <span class="unit">/ from</span>
+        </div>
+        <ul>
+          <li>Hand wash &amp; foam bath</li>
+          <li>Wheel &amp; tire detail</li>
+          <li>Interior vacuum</li>
+          <li>Window cleaning</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Book Express</a>
+      </article>
+
+      <!-- Package 2 (featured) -->
+      <article class="pkg pkg-featured">
+        <span class="pkg-tag">Most Popular</span>
+        <h3>Signature Detail</h3>
+        <p class="pkg-sub">The full inside &amp; out treatment.</p>
+        <div class="price">
+          <span class="amount">$210</span>
+          <span class="unit">/ from</span>
+        </div>
+        <ul>
+          <li>Everything in Express</li>
+          <li>Clay bar decontamination</li>
+          <li>Hand-applied carnauba wax</li>
+          <li>Full interior shampoo</li>
+          <li>Leather conditioning</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Book Signature</a>
+      </article>
+
+      <!-- Package 3 -->
+      <article class="pkg">
+        <h3>Showroom</h3>
+        <p class="pkg-sub">Concours-level restoration.</p>
+        <div class="price">
+          <span class="amount">$300</span>
+          <span class="unit">/ from</span>
+        </div>
+        <ul>
+          <li>Everything in Signature</li>
+          <li>Single-stage paint correction</li>
+          <li>Ceramic spray sealant</li>
+          <li>Engine bay dressing</li>
+          <li>Headlight restoration</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Book Showroom</a>
+      </article>
+
+      <!-- Package 4 -->
+      <article class="pkg">
+        <h3>Fleet &amp; Custom</h3>
+        <p class="pkg-sub">Multiple vehicles or tailored requests.</p>
+        <div class="price">
+          <span class="amount">Custom</span>
+          <span class="unit">/ quote</span>
+        </div>
+        <ul>
+          <li>Volume pricing for 2+ vehicles</li>
+          <li>Tailored service menu</li>
+          <li>On-site at home or office</li>
+          <li>Flexible scheduling</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Request a Quote</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ========= SERVICE AREA + MAP ========= -->
+<section class="section" id="area">
+  <div class="container">
+    <div class="section-head">
+      <h2>Service <em>Area</em></h2>
+      <p>We come to you. Mobile detailing throughout the West Los Angeles area and surrounding neighborhoods.</p>
+    </div>
+
+    <div class="area-grid">
+      <div class="area-info">
+        <div>
+          <h3>Cities we serve</h3>
+          <p>Free travel within a 15-mile radius of our home base. Beyond that, a small travel fee applies.</p>
+          <ul>
+            <li>Santa Monica</li>
+            <li>Brentwood</li>
+            <li>Westwood</li>
+            <li>Culver City</li>
+            <li>Mar Vista</li>
+            <li>Venice</li>
+            <li>Pacific Palisades</li>
+            <li>Beverly Hills</li>
+          </ul>
+        </div>
+        <a href="#contact" class="btn btn-primary">Check My Address →</a>
+      </div>
+
+      <div class="map-wrap">
+        <!--
+          To re-center the map: change the bbox values below.
+          bbox = left,bottom,right,top (longitude/latitude).
+          Currently centered on West Los Angeles.
+        -->
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-118.55,33.97,-118.33,34.13&amp;layer=mapnik&amp;marker=34.0494,-118.4444"
+          title="Service area map"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= CONTACT ========= -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <h2>Get in <em>touch</em></h2>
+      <p>Text us for the fastest reply, or send a note and we'll get back within the day.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="label">Call or Text</div>
+        <a class="value" href="tel:+15594215326">(559)-421-5326</a>
+      </div>
+      <div class="contact-card">
+        <div class="label">Email</div>
+        <a class="value" href="mailto:hello@jjautodetail.com">hello@jjautodetail.com</a>
+        <div class="meta">Replies within 24h</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Instagram</div>
+        <a class="value" href="#">@jjautodetail</a>
+      </div>
+      <div class="contact-card">
+        <div class="label">Home Base</div>
+        <span class="value">West Los Angeles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========= FOOTER ========= -->
+<footer>
+  <div class="container">
+    <div>© 2026 JJAutoDetail. All rights reserved.</div>
+    <div>Crafted with care · Detailing since 2020</div>
+  </div>
+</footer>
+
+</body>
+</html>
